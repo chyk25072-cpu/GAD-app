@@ -209,7 +209,7 @@
                 <button class="friend-action-link" onclick="deleteCurrentFriend()" style="color:#aaa;">削除</button>
             </div>
 
-            <h2 class="section-title">今日の満足度</h2>
+            <h2 class="section-title" id="moodTitle">今日の満足度</h2>
             <div class="stamps">
                 <button class="stamp-btn" onclick="setMood(1)"><img src="./images/stamp1.png" alt="1"></button>
                 <button class="stamp-btn" onclick="setMood(2)"><img src="./images/stamp2.png" alt="2"></button>
@@ -218,7 +218,7 @@
                 <button class="stamp-btn" onclick="setMood(5)"><img src="./images/stamp5.png" alt="5"></button>
             </div>
 
-            <h2 class="section-title">今日のタスク</h2>
+            <h2 class="section-title" id="taskTitle">今日のタスク</h2>
             <div class="task-container">
                 <ul class="task-list" id="taskList"></ul>
                 <div class="add-task-row">
@@ -358,6 +358,19 @@
             const m = viewingDate.getMonth() + 1;
             const d = viewingDate.getDate();
             document.getElementById('dateDisplay').innerText = `${y}/${m.toString().padStart(2,'0')}/${d.toString().padStart(2,'0')}`;
+
+            // 1. 今日の日付を取得
+            const today = new Date();
+    
+            // 2. 「表示中の日付」と「今日」が同じか判定
+            const isToday = (today.getFullYear() === y && (today.getMonth() + 1) === m && today.getDate() === d);
+
+            // 3. 今日なら「今日」、違うなら「〇月〇日」という文字を作る
+            const dateLabel = isToday ? "今日" : `${m}月${d}日`;
+
+            // 4. 画面に反映
+            document.getElementById('moodTitle').innerText = `${dateLabel}の満足度`;
+            document.getElementById('taskTitle').innerText = `${dateLabel}のタスク`;
 
             let data = {};
             if(isFriendMode) {
